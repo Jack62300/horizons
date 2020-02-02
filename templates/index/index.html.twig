@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau des taches{% endblock %}
+
+{% block body %}
+<div class="grid-container">
+    <div class="dropdown">
+        <button type="button" class="btn btn-primary dropdown-toggle btnPerso" data-toggle="dropdown">
+            Voir par Type
+        </button>
+        <div class="dropdown-menu">
+            <div class="dropdown-header">Section jeux</div>
+            <a class="dropdown-item" href="{{path('overwatch_task')}}">Section overwatch</a>
+            <a class="dropdown-item" href="{{path('apex_task')}}">Section Apex</a>
+            <a class="dropdown-item" href="{{path('lol_task')}}">Section League of Legend</a>
+            <a class="dropdown-item" href="{{path('dofus_task')}}">Section Dofus</a>
+            <a class="dropdown-item" href="{{path('wow_task')}}">Section World of Warcraft</a>
+            <a class="dropdown-item" href="{{path('r6_task')}}">Section Rainbow Six</a>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-header">Section Administrative</div>
+            <a class="dropdown-item" href="{{path('communication_task')}}">Pôle Communication</a>
+            <a class="dropdown-item" href="{{path('communautaire_task')}}">Pôle Communautaire</a>
+            <a class="dropdown-item" href="{{path('admin_task')}}">Pôle Administrative</a>
+            <a class="dropdown-item" href="{{path('tech_task')}}">Pôle Technique</a>
+            <a class="dropdown-item" href="{{path('dev_task')}}">Pôle Développement</a>
+        </div>
+    </div>
+
+   
+     <div ><a href="{{path('index')}}"><button class="btn btn-info btnPerso">Voir tout</button></a></div>
+     <div><a href="{{path('add_task')}}"><button class="btn btn-success btnPerso">Ajouter</button></a></div>
+    
+</div>
+
+<div class="formTypeTask2">
+{% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+<table class="table">
+
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Date de Création</th>
+        <th>Auteur</th>
+        <th>Type</th>
+        <th>Action</th>
+         <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for task in tasks %}
+    
+      <tr>
+   
+        <td class="center">{{ task.titre }}</td>
+        <td class="center">{{ task.createdAt|date('d/m/y') }}</td>
+        <td class="center">{{ task.author|upper }}</td>
+        <td class="center">{{ task.type }}</td>
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MODO')%}
+                                                    
+                <td class="center">
+                    <a href="{{ path('taskEdit', {'id': task.id }) }}"><button class="btn btn-warning">Update</button></a>
+                    <a href="{{ path('taskDelete', {'id': task.id }) }}"><button class="btn btn-danger">Delete</button></a>
+                    <a href="{{ path('taskView', {'id': task.id }) }}"><button class="btn btn-dark">Voir</button></a>
+                </td>
+            {% else %}
+                <td> <a href="{{ path('taskView', {'id': task.id }) }}"><button class="btn btn-dark">Voir</button></a></td>
+            {% endif %}
+        {% if task.taskCategorie == "Première demande" %}
+        <td class="one">{{ task.taskCategorie }}</td>
+        {% elseif task.taskCategorie == "En cours" %}
+        <td class="two">{{ task.taskCategorie }}</td>
+        {% elseif task.taskCategorie == "Refuser" %}
+        <td class="twos">{{ task.taskCategorie }}</td>
+        {% elseif task.taskCategorie == "En attente" %}
+        <td class="twoss">{{ task.taskCategorie }}</td>
+        {% elseif task.taskCategorie == "Doublon" %}
+        <td class="twosss">{{ task.taskCategorie }}</td>
+        {% elseif task.taskCategorie == "Terminer" %}
+        <td class="twoT">{{ task.taskCategorie }}</td>
+        {% else %}
+        <td class="">{{ task.taskCategorie }}</td>
+        {% endif %}
+      </tr>
+
+    {% endfor %}
+    </tbody>
+  </table>
+ 
+  </div>
+   <div class="paginat">
+  {{ knp_pagination_render(tasks) }}
+  </div>
+  
+{% endblock %}

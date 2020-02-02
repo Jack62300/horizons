@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lecture de tache{% endblock %}
+
+{% block body %}
+<div class="formTypeTask2">
+<div class="card">
+  <div class="card-header">{{task.titre|upper}} créer le : {{task.createdAt|date('d/m/y')}} par : {{task.author|upper}} section : {{task.type|upper}}</div>
+  <div class="card-body">{{task.content}}</div>
+  <div class="card-footer"> {% if task.taskCategorie == "Première demande" %}
+        <div class="one">{{ task.taskCategorie }}</div>
+        {% elseif task.taskCategorie == "En cours" %}
+        <div class="two">{{ task.taskCategorie }}</div>
+        {% elseif task.taskCategorie == "Refuser" %}
+        <div class="twos">{{ task.taskCategorie }}</div>
+        {% elseif task.taskCategorie == "En attente" %}
+        <div class="twoss">{{ task.taskCategorie }}</div>
+        {% elseif task.taskCategorie == "Doublon" %}
+        <div class="twosss">{{ task.taskCategorie }}</div>
+        {% elseif task.taskCategorie == "Terminer" %}
+        <div class="twoT">{{ task.taskCategorie }}</div>
+        {% else %}
+        <div class="">{{ task.taskCategorie }}</div>
+        {% endif %}</div>
+</div>
+
+       
+      
+
+
+   
+  </div>
+{% endblock %}

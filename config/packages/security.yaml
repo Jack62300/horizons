@@ -1,0 +1,47 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
+            
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        in_memory: { memory: null }
+        in_authentification:
+            entity:
+                class: App\Entity\User
+                property: username
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+            access_denied_url: /forbidden
+        main:
+            anonymous: lazy
+            provider: in_authentification
+            access_denied_url: /forbidden
+
+            form_login:
+                login_path: security_login
+                check_path: security_login
+            logout:
+                path: security_logout
+                target: /
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_ADMIN, ROLE_MODO]
+        ROLE_SUPER_ADMIN: ROLE_DEV 
+        ROLE_USER: ROLE_USER
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+         - { path: ^/home, roles: [ROLE_ADMIN, ROLE_MODO, ROLE_DEV,ROLE_USER] }
+         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        #  - { path: ^/lspd, roles: [ROLE_ADMIN, ROLE_DEV, ROLE_LSPD] }
+        #  - { path: ^/weazelAdmin, roles: [ROLE_ADMIN, ROLE_DEV, ROLE_WEAZEL] }
+        #  - { path: ^/membre, roles: [ROLE_USER, ROLE_ADMIN, ROLE_MODO, ROLE_DEV, ROLE_WEAZEL, ROLE_LSPD] }
+        #  - { path: ^/error403$, roles: [ ROLE_INACTIVE, ROLE_ACTIVE_CC_PROBLEM, ROLE_ACTIVE_NO_ACCESS ] }

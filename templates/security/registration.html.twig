@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription sur Horizon'S Task Dashboard{% endblock %}
+
+{% block body %}
+<div class="form_register">
+<img class="logo_register" src="{{asset('images/logo.jpg')}}">
+<div class="h3">
+<h3>Inscription sur <b style="color: #333; ">Reborn Roleplay</b>
+</div>
+<div class="my-custom-class-for-errors">
+{% if not form.vars.valid %}
+        <div class="alert alert-warning alertPerso" > {{ form_errors(form.email) }}</div>
+        <div class="alert alert-danger alertPerso" > {{ form_errors(form.password) }}</div>
+        <div class="alert alert-danger alertPerso" > {{ form_errors(form.confirm_password) }}</div>
+{% endif %}
+    </div>
+{{ form_start(form) }}
+
+<span class="badge badge-secondary badgePerso">Nom D'utilisateur</span>
+{{ form_widget(form.username,{'attr': {'placeholder': 'Pseudo du compte ...'} }) }}<br/>
+
+<span class="badge badge-secondary badgePerso">Adresse Email</span>
+{{ form_widget(form.email,{'attr': {'placeholder': 'Adresse Email'} }) }}<br/>
+
+<span class="badge badge-secondary badgePerso">Mot de Passe</span>
+{{ form_widget(form.password,{'attr': {'placeholder': 'Mot de Passe'} }) }}<br/>
+
+
+<span class="badge badge-secondary badgePerso">Confirmation du Mot de Passe</span>
+{{ form_widget(form.confirm_password,{'attr': {'placeholder': 'confirmation du Mot de Passe'} }) }}<br/>
+
+<button type="submit" class="btn btn-success btnPerso">Inscription</button>
+{{form_end(form)}}
+</div>
+{% endblock %}
