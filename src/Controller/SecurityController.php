@@ -41,6 +41,33 @@ class SecurityController extends AbstractController
         ]);
     }
 
+
+        /**
+     * @Route("/updateUser", name="update_user")
+     */
+    public function update(Request $request, ManagerRegistry $manager, UserPasswordEncoderInterface $encoder)
+    {
+        $user = new User();
+
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            // Hash du mot de passe et roles par default
+          
+           
+            // Validation des donnée à insert en bdd
+            $em = $manager->getManager();
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('security_login');
+        }
+        return $this->render('security/registration.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     /**
      * @Route("/", name="security_login")
      */

@@ -5,7 +5,7 @@
 {% block body %}
 <div class="formTypeTask2">
 <div class="card">
-  <div class="card-header">{{task.titre|upper}} créer le : {{task.createdAt|date('d/m/y')}} par : {{task.author|upper}} section : {{task.type|upper}}</div>
+  <div class="card-header">{{task.titre|upper}} créer le : {{task.createdAt|date('d/m/y')}} par : {{task.author|upper}} section : {{task.section|upper}}</div>
   <div class="card-body">{{task.content}}</div>
   <div class="card-footer"> {% if task.taskCategorie == "Première demande" %}
         <div class="one">{{ task.taskCategorie }}</div>

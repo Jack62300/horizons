@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use App\Form\TaskEditType;
 use App\Repository\TaskRepository;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,11 +24,15 @@ class IndexController extends AbstractController
     /**
      * @Route("/home", name="index")
      */
-    public function index(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
+    public function index(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request, UserRepository $repoUser)
     {
-        
+        $username = $this->getUser()->getUsername();
         $taskss = new Task();
         $taskss = $repoTask->findBy(array(), array('taskCategorie' => 'ASC'));
+        
+        $user = new User();
+        $user = $repoUser->findBy(array('username' => $username));
+        $user = $user[0];
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
@@ -37,25 +43,35 @@ class IndexController extends AbstractController
 
         return $this->render('index/index.html.twig', [
             'tasks' => $task,
+            'username' => $username,
+            'user' => $user,
         ]);
     }
 
         /**
      * @Route("/overwatch", name="overwatch_task")
      */
-    public function overwatch(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
+    public function overwatch(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request,UserRepository $repoUser)
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Section Overwatch'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 1), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
             10 // Nombre de résultats par page
         );
+
+        $username = $this->getUser()->getUsername();
+        $user = new User();
+        $user = $repoUser->findBy(array('username' => $username));
+        $user = $user[0];
+
         return $this->render('index/index.html.twig', [
             'tasks' => $task,
+            'username' => $username,
+            'user' => $user,
         ]);
     }
 
@@ -66,7 +82,7 @@ class IndexController extends AbstractController
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Section Apex'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 'Apex'), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
@@ -86,7 +102,7 @@ class IndexController extends AbstractController
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Section Lol'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 'Lol'), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
@@ -106,7 +122,7 @@ class IndexController extends AbstractController
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Section Dofus'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 'Dofus'), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
@@ -126,7 +142,7 @@ class IndexController extends AbstractController
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Section Wow'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 'Wow'), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
@@ -146,7 +162,7 @@ class IndexController extends AbstractController
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Section R6'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 'Rainbow Six'), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
@@ -172,7 +188,7 @@ class IndexController extends AbstractController
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Technique'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 'Technique'), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
@@ -192,7 +208,7 @@ class IndexController extends AbstractController
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Communautaire'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 'Communautaire'), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
@@ -212,7 +228,7 @@ class IndexController extends AbstractController
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Administration'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 'Administration'), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
@@ -232,7 +248,7 @@ class IndexController extends AbstractController
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Développement web'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 'Développement web'), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
@@ -252,7 +268,7 @@ class IndexController extends AbstractController
     {
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('type' => 'Communication'), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => 'Communication'), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)

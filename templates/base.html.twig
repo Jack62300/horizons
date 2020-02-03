@@ -6,6 +6,7 @@
         {% block stylesheets %}{% endblock %}
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -28,7 +29,13 @@
   <ul class="navbar-nav">
     <li class="nav-item">
       <a class="nav-link" href="{{ path('index') }}">Liste des Taches</a>
+
     </li>
+          {% if is_granted('ROLE_DEV') or is_granted('ROLE_ADMIN') %}
+           <li class="nav-item">
+      <a class="nav-link" href="{{ path('section_add') }}">Création de section</a>
+      </li>
+      {% endif %}
   </ul>
 </nav>
     <div class="container-fluid">

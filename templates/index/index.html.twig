@@ -3,7 +3,80 @@
 {% block title %}Tableau des taches{% endblock %}
 
 {% block body %}
-<div class="grid-container">
+<div class="formTypeTask2">
+{% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+</div>
+<div class="content">
+
+
+
+
+<table class="table">
+
+    <thead class="thead-dark">
+      <tr>
+        <th>Titre</th>
+        <th>Date de Création</th>
+        <th>Auteur</th>
+        <th>Section</th>
+        <th>Action</th>
+         <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for task in tasks %}
+    
+      <tr>
+   
+        <td class="center">{{ task.titre }}</td>
+        <td class="center">{{ task.createdAt|date('d/m/y') }}</td>
+        <td class="center">{{ task.author }}</td>
+        <td class="center">{{ task.section }}</td>
+            {% if is_granted('ROLE_DEV') or is_granted('ROLE_ADMIN') %}
+                                                    
+                <td class="center">
+                    <a href="{{ path('taskEdit', {'id': task.id }) }}"><button class="btn btn-warning"><i class="fas fa-edit"></i></button></a>
+                    <a href="{{ path('taskDelete', {'id': task.id }) }}"><button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></a>
+                    <a href="{{ path('taskView', {'id': task.id }) }}"><button class="btn btn-info"><i class="fas fa-eye"></i></button></a>
+                </td>
+            
+                    
+            {% elseif is_granted('ROLE_MODO') and task.author == username and user.sectionOwner == task.section %}
+                                                    
+                        <td class="center">
+                            <a href="{{ path('taskEdit', {'id': task.id }) }}"><button class="btn btn-warning"><i class="fas fa-edit"></i></button></a>
+                            <a href="{{ path('taskView', {'id': task.id }) }}"><button class="btn btn-info"><i class="fas fa-eye"></i></button></a>
+                        </td>
+            
+
+            {% else %}
+                <td> <a href="{{ path('taskView', {'id': task.id }) }}"><button class="btn btn-info"><i class="fas fa-eye"></i></button></a></td>
+            {% endif %}
+                {% if task.taskCategorie == "Première demande" %}
+                    <td class="one">{{ task.taskCategorie }}</td>
+                {% elseif task.taskCategorie == "En cours" %}
+                    <td class="two">{{ task.taskCategorie }}</td>
+                {% elseif task.taskCategorie == "Refuser" %}
+                    <td class="twos">{{ task.taskCategorie }}</td>
+                {% elseif task.taskCategorie == "En attente" %}
+                    <td class="twoss">{{ task.taskCategorie }}</td>
+                {% elseif task.taskCategorie == "Doublon" %}
+                    <td class="twosss">{{ task.taskCategorie }}</td>
+                {% elseif task.taskCategorie == "Terminer" %}
+                    <td class="twoT">{{ task.taskCategorie }}</td>
+                {% else %}
+                    <td class="">{{ task.taskCategorie }}</td>
+                {% endif %}
+      </tr>
+
+    {% endfor %}
+    </tbody>
+  </table>
+ <div class="grid-container">
     <div class="dropdown">
         <button type="button" class="btn btn-primary dropdown-toggle btnPerso" data-toggle="dropdown">
             Voir par Type
@@ -31,69 +104,15 @@
      <div><a href="{{path('add_task')}}"><button class="btn btn-success btnPerso">Ajouter</button></a></div>
     
 </div>
-
-<div class="formTypeTask2">
-{% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
-
-<table class="table">
-
-    <thead>
-      <tr>
-        <th>Titre</th>
-        <th>Date de Création</th>
-        <th>Auteur</th>
-        <th>Type</th>
-        <th>Action</th>
-         <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for task in tasks %}
-    
-      <tr>
-   
-        <td class="center">{{ task.titre }}</td>
-        <td class="center">{{ task.createdAt|date('d/m/y') }}</td>
-        <td class="center">{{ task.author|upper }}</td>
-        <td class="center">{{ task.type }}</td>
-            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MODO')%}
-                                                    
-                <td class="center">
-                    <a href="{{ path('taskEdit', {'id': task.id }) }}"><button class="btn btn-warning">Update</button></a>
-                    <a href="{{ path('taskDelete', {'id': task.id }) }}"><button class="btn btn-danger">Delete</button></a>
-                    <a href="{{ path('taskView', {'id': task.id }) }}"><button class="btn btn-dark">Voir</button></a>
-                </td>
-            {% else %}
-                <td> <a href="{{ path('taskView', {'id': task.id }) }}"><button class="btn btn-dark">Voir</button></a></td>
-            {% endif %}
-        {% if task.taskCategorie == "Première demande" %}
-        <td class="one">{{ task.taskCategorie }}</td>
-        {% elseif task.taskCategorie == "En cours" %}
-        <td class="two">{{ task.taskCategorie }}</td>
-        {% elseif task.taskCategorie == "Refuser" %}
-        <td class="twos">{{ task.taskCategorie }}</td>
-        {% elseif task.taskCategorie == "En attente" %}
-        <td class="twoss">{{ task.taskCategorie }}</td>
-        {% elseif task.taskCategorie == "Doublon" %}
-        <td class="twosss">{{ task.taskCategorie }}</td>
-        {% elseif task.taskCategorie == "Terminer" %}
-        <td class="twoT">{{ task.taskCategorie }}</td>
-        {% else %}
-        <td class="">{{ task.taskCategorie }}</td>
-        {% endif %}
-      </tr>
-
-    {% endfor %}
-    </tbody>
-  </table>
- 
   </div>
    <div class="paginat">
   {{ knp_pagination_render(tasks) }}
   </div>
+  
+</div>
+  <ul> 
+  <li><i class="fas fa-edit"> </i> Editer le contenue</li>
+  <li><i class="fas fa-trash-alt"></i>  Supprimer le contenue</li>
+  <li><i class="fas fa-eye"></i> Voir le contenue</li>
   
 {% endblock %}

@@ -56,6 +56,11 @@ class User implements UserInterface
 
     private $tentativeWhitelist;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Section", inversedBy="users")
+     */
+    private $sectionOwner;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -110,12 +115,29 @@ class User implements UserInterface
 
         return $this;
     }
+    /**
+    * toString
+    * @return string
+    */
     public function __toString()
     {
         return $this->getUsername();
     }
     public function eraseCredentials(){}
     public function getSalt(){}
+
+    public function getSectionOwner(): ?Section
+    {
+        return $this->sectionOwner;
+    }
+
+    public function setSectionOwner(?Section $sectionOwner): self
+    {
+        $this->sectionOwner = $sectionOwner;
+
+        return $this;
+    }
+
 
 
 

@@ -13,11 +13,7 @@
     border-top: 10px solid #333;
     border-radius: 10px;
 }
-.formTypeTask2{
-    background-color: #dcdcdc !important;
-    border-top: 10px solid #333;
-    border-radius: 2px;
-}
+
 tr {
     padding: 0 !important;
     text-align:center;
@@ -112,12 +108,7 @@ thead th{
     width: 100%;
     border-radius: 0 !important;
 }
-table{
-    border: solid 2px #333;
-}
-thead{
-    border-bottom : solid 2px #333 !important;
-}
+
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -149,5 +140,11 @@ thead{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.content{
+    margin-left: 20%;
+    margin-top: 5%;
+    max-width:1000px;
+
 }
 

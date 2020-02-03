@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Section Add{% endblock %}
+
+{% block body %}
+<div class="form_register">
+
+<div class="h3">
+<h3>Création de section <b style="color: #333; ">Horizon'S</b></h3>
+
+</div>
+<div class="my-custom-class-for-errors">
+{% if not form.vars.valid %}
+        <div class="alert alert-warning alertPerso" > {{ form_errors(form.name) }}</div>
+{% endif %}
+    </div>
+{{ form_start(form) }}
+
+<span class="badge badge-secondary badgePerso">Nom D'utilisateur</span>
+{{ form_widget(form.name,{'attr': {'placeholder': 'Nom de la Section'} }) }}<br/>
+
+
+
+<button type="submit" class="btn btn-success btnPerso">Créer</button>
+{{form_end(form)}}
+</div>
+{% endblock %}

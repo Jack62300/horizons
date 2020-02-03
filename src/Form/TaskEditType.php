@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Task;
+use App\Entity\User;
+use App\Entity\Section;
 use App\Entity\TaskCategorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +20,9 @@ class TaskEditType extends AbstractType
     {
         $builder
         ->add('titre')
-        ->add('author')
+        ->add('author', EntityType::class, [
+            'class' => User::class,
+            'choice_label' => 'username', ])
         ->add('createdAt', DateType::class, [
             'placeholder' => [
                 'day' => 'Jour', 'month' => 'Mois', 'year' => 'Année',
@@ -27,25 +31,13 @@ class TaskEditType extends AbstractType
         ->add('content',TextareaType::class, [
             'attr' => ['class' => 'tinymce'],
         ])
-        ->add('type', ChoiceType::class, [
-            'choices'  => [
-                'Développement Web' => "Développement web",
-                'Administrations' => "Administration",
-                'Communautaire' => "Communautaire",
-                'Communication' => "Communication",
-                'Technique' => "Technique",
-                'Section Dofus' => "Section Dofus",
-                'Section Apex' => "Section Apex",
-                'Section Lol' => "Section Lol",
-                'Section Wow' => "Section Wow",
-                'Section R6' => "Section R6",
-                'Section Overwatch' => "Section Overwatch",
-            ],
-
-        ])
+        ->add('section', EntityType::class, [
+            'class' => Section::class,
+            'choice_label' => 'name', ])
         ->add('taskCategorie', EntityType::class, [
             'class' => TaskCategorie::class,
             'choice_label' => 'name', ])
+        ->add('urlDoc')
     ;
     }
 

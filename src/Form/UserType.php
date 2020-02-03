@@ -18,6 +18,17 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('password', PasswordType::class)
             ->add('confirm_password', PasswordType::class)
+            ->add('roles', ChoiceType::class, [
+                'choices'  => [
+                    'Administrateur' => '["ROLE_ADMIN"]',
+                    'Modérateur' => '["ROLE_MODO"]',
+                    'Modérateur Section(Vue uniquement)' => '["ROLE_USER"]',
+                ],
+    
+            ])
+            ->add('sectionOwner', EntityType::class, [
+                'class' => Section::class,
+                'choice_label' => 'name', ])
         ;
     }
 

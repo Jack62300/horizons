@@ -14,7 +14,9 @@
         <div class="alert alert-danger alertPerso" > {{ form_errors(form.confirm_password) }}</div>
     </div> #}
 <form action="{{ path('security_login')}}" method="post">
-
+{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+<p>  Welcome <b>{{ app.user.username }}</b></p>
+{%endif%}
     <div class="form-group">
         <span class="badge badge-secondary badgePerso">Nom D'utilisateur</span>
         <input type="text" class="form-control" placeholder="Nom d'utilisateur" name="_username" id="email">

@@ -38,15 +38,21 @@ class Task
      */
     private $content;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TaskCategorie", inversedBy="tasks")
      */
     private $taskCategorie;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $urlDoc;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Section", inversedBy="tasks")
+     */
+    private $section;
 
    
 
@@ -105,17 +111,6 @@ class Task
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getTaskCategorie(): ?TaskCategorie
     {
@@ -125,6 +120,30 @@ class Task
     public function setTaskCategorie(?TaskCategorie $taskCategorie): self
     {
         $this->taskCategorie = $taskCategorie;
+
+        return $this;
+    }
+
+    public function getUrlDoc(): ?string
+    {
+        return $this->urlDoc;
+    }
+
+    public function setUrlDoc(?string $urlDoc): self
+    {
+        $this->urlDoc = $urlDoc;
+
+        return $this;
+    }
+
+    public function getSection(): ?Section
+    {
+        return $this->section;
+    }
+
+    public function setSection(?Section $section): self
+    {
+        $this->section = $section;
 
         return $this;
     }
