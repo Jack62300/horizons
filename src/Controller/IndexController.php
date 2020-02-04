@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Form\TaskType;
+use App\Entity\Section;
 use App\Form\TaskEditType;
 use App\Repository\TaskRepository;
 use App\Repository\UserRepository;
+use App\Repository\SectionRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +26,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/home", name="index")
      */
-    public function index(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request, UserRepository $repoUser)
+    public function index(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request, UserRepository $repoUser,SectionRepository $repoSection)
     {
         $username = $this->getUser()->getUsername();
         $taskss = new Task();
@@ -34,253 +36,56 @@ class IndexController extends AbstractController
         $user = $repoUser->findBy(array('username' => $username));
         $user = $user[0];
 
+        $section = new Section();
+        $section = $repoSection->findAll();
+
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
             10 // Nombre de résultats par page
         );
-
+        
 
         return $this->render('index/index.html.twig', [
             'tasks' => $task,
             'username' => $username,
             'user' => $user,
+            'sections' => $section,
         ]);
     }
 
         /**
-     * @Route("/overwatch", name="overwatch_task")
+     * @Route("/section/{id}", name="section_task")
      */
-    public function overwatch(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request,UserRepository $repoUser)
+    public function section(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request,UserRepository $repoUser,SectionRepository $repoSection, $id)
     {
+       
         
         $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 1), array('taskCategorie' => 'ASC'));
+        $taskss = $repoTask->findBy(array('section' => $id), array('taskCategorie' => 'ASC'));
 
         $task = $paginator->paginate(
             $taskss, // Requête contenant les données à paginer (ici nos articles)
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
             10 // Nombre de résultats par page
         );
+
+        $section = new Section();
+        $section = $repoSection->findAll();
 
         $username = $this->getUser()->getUsername();
         $user = new User();
         $user = $repoUser->findBy(array('username' => $username));
         $user = $user[0];
-
+        
         return $this->render('index/index.html.twig', [
             'tasks' => $task,
             'username' => $username,
             'user' => $user,
+            'sections' => $section,
         ]);
     }
-
-        /**
-     * @Route("/apex", name="apex_task")
-     */
-    public function apex(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
-    {
-        
-        $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 'Apex'), array('taskCategorie' => 'ASC'));
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        ); 
-
-        return $this->render('index/index.html.twig', [
-            'tasks' => $task,
-        ]);
-    }
-
-     /**
-     * @Route("/leagueOfLegend", name="lol_task")
-     */
-    public function lol(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
-    {
-        
-        $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 'Lol'), array('taskCategorie' => 'ASC'));
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-        return $this->render('index/index.html.twig', [
-            'tasks' => $task,
-        ]);
-    }
-
-    /**
-     * @Route("/dofus", name="dofus_task")
-     */
-    public function dofus(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
-    {
-        
-        $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 'Dofus'), array('taskCategorie' => 'ASC'));
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-        return $this->render('index/index.html.twig', [
-            'tasks' => $task,
-        ]);
-    }
-
-     /**
-     * @Route("/worldOfWarcraft", name="wow_task")
-     */
-    public function wow(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
-    {
-        
-        $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 'Wow'), array('taskCategorie' => 'ASC'));
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-        return $this->render('index/index.html.twig', [
-            'tasks' => $task,
-        ]);
-    }
-
-     /**
-     * @Route("/Rainbow6", name="r6_task")
-     */
-    public function rainbow(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
-    {
-        
-        $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 'Rainbow Six'), array('taskCategorie' => 'ASC'));
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-        return $this->render('index/index.html.twig', [
-            'tasks' => $task,
-        ]);
-    }
-
-     /**
-     * @Route("/technique", name="tech_task")
-     */
-    public function technique(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
-    {
-        
-        $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 'Technique'), array('taskCategorie' => 'ASC'));
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-        return $this->render('index/index.html.twig', [
-            'tasks' => $task,
-        ]);
-    }
-
-      /**
-     * @Route("/communautaire", name="communautaire_task")
-     */
-    public function communautaire(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
-    {
-        
-        $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 'Communautaire'), array('taskCategorie' => 'ASC'));
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-
-        return $this->render('index/index.html.twig', [
-            'tasks' => $task,
-        ]);
-    }
-      /**
-     * @Route("/administration", name="admin_task")
-     */
-    public function admin(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
-    {
-        
-        $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 'Administration'), array('taskCategorie' => 'ASC'));
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-        return $this->render('index/index.html.twig', [
-            'tasks' => $task,
-        ]);
-    }
-
-      /**
-     * @Route("/developpement", name="dev_task")
-     */
-    public function dev(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
-    {
-        
-        $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 'Développement web'), array('taskCategorie' => 'ASC'));
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-        return $this->render('index/index.html.twig', [
-            'tasks' => $task,
-        ]);
-    }
-
-        /**
-     * @Route("/communication", name="communication_task")
-     */
-    public function communication(TaskRepository $repoTask,PaginatorInterface $paginator, Request $request)
-    {
-        
-        $taskss = new Task();
-        $taskss = $repoTask->findBy(array('section' => 'Communication'), array('taskCategorie' => 'ASC'));
-
-        $task = $paginator->paginate(
-            $taskss, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            10 // Nombre de résultats par page
-        );
-
-        return $this->render('index/index.html.twig', [
-            'tasks' => $task,
-        ]);
-    }
-
+  
     /**
      * @Route("/task/{id}", name="taskView")
      */

@@ -4,9 +4,9 @@
 
 {% block body %}
 <div class="form_register">
-<img class="logo_register" src="{{asset('images/logo.png')}}" style="max-width: 200px;">
+<img class="logo_register" src="{{asset('images/logo.jpg')}}">
 <div class="h3">
-<h3>Création de compte <b style="color: #333; ">Horizon's Task</b>
+<h3>Modification du compte <b style="color: #333; ">Horizon's Task</b>
 </div>
 <div class="my-custom-class-for-errors">
 {% if not form.vars.valid %}
@@ -32,6 +32,9 @@
 
 <span class="badge badge-secondary badgePerso">Section Owner</span>
 {{ form_widget(form.sectionOwner) }}<br/>
+
+<span class="badge badge-secondary badgePerso">Role à attribuer ?</span>
+{{ form_widget(form.roles) }}<br/>
 
 <button type="submit" class="btn btn-success btnPerso">Créer le compte</button>
 {{form_end(form)}}

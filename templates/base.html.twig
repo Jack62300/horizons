@@ -33,8 +33,14 @@
     </li>
           {% if is_granted('ROLE_DEV') or is_granted('ROLE_ADMIN') %}
            <li class="nav-item">
-      <a class="nav-link" href="{{ path('section_add') }}">Création de section</a>
-      </li>
+                <a class="nav-link" href="{{ path('section_add') }}">Création de section</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('security_register') }}">Création de compte</a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{{ path('liste_member') }}">Liste des Utilisateurs</a>
+            </li>
       {% endif %}
   </ul>
 </nav>

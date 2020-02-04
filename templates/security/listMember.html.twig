@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion sur Horizon'S Task Dashboard{% endblock %}
+
+{% block body %}
+<div class="content">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nom d'utilisateur</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+{% for user in users %}
+      <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.sectionOwner }}</td>
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_DEV') %}
+        <td><a href="{{ path('update_user', {'id': user.id }) }}"><button class="btn btn-success btnPerso">UPDATE</button></a></td>
+        {% else %}
+        <td><button class="btn btn-success btnPerso disabled"><i class="fas fa-lock"></i></button></td>
+        {% endif %}
+        
+      </tr>
+{% endfor %}
+ </tbody>
+  </table>
+</div>
+{% endblock %}

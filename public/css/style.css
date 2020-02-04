@@ -1,17 +1,26 @@
-
+body{
+    margin: 0 !important;
+    background: url("../images/bg.jpg") no-repeat;
+    background-size: cover;
+}
 .navbarPerso{
     background-color: #333 !important;
     width: 250px;
     height: 100vh;
 }
-.container{
+.container-fluid{
     margin-top: 5%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 .formTypeTask{
     background-color: #dcdcdc !important;
     padding: 20px;
     border-top: 10px solid #333;
     border-radius: 10px;
+    max-width: 50%;
+    margin-left: 22%;
+    margin-top: 2%;
 }
 
 tr {
@@ -99,14 +108,25 @@ thead, tr{
 .table td{
      padding: 0 !important; 
      vertical-align: none !important; 
+    
 }
-
+.table{
+    background-color: #fff;
+    padding: 10px;
+}
+h3{
+    color: white;
+}
 thead th{
     padding: 10px !important;
 }
 .btnPerso{
     width: 100%;
     border-radius: 0 !important;
+    background-color: rgba(2, 52, 91,0.7) !important;
+    color: #dcdcdc;
+    border: 0 !important;
+    border-left:1px solid white !important;
 }
 
 .grid-container {
@@ -141,10 +161,47 @@ thead th{
     align-items: center;
     justify-content: center;
 }
-.content{
-    margin-left: 20%;
-    margin-top: 5%;
-    max-width:1000px;
+.form_register{
+    padding: 10px;
+    max-width: 30%;
+    margin-left: 35%;
+    background-color: rgba(0,0,0,0.2);
+    border: solid 5px rgba(2, 52, 91,0.2);
+    border-radius: 5px;
+    text-align:center;
+}
+.badgePerso{
+    background-color: #333 !important;
+    color: rgba(255,255,255) !important;
+    width: 250px;
+    height: 20px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-left: 8px;
+    vertical-align:middle;
+    display: table-cell;
+}
+.navbar{
+    border-bottom: solid 5px rgba(2, 52, 91,0.3);
+    padding: 0 !important;
+}
+.navbar .nav-link:hover{
 
+    background-color: rgba(2, 52, 91,0.7) !important;
+    color: white !important;
+    border-radius: 5px;
+
+}
+.bg-dark{
+    background-color: #01192C !important;
+}
+.legend{
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 25px !important;
+    border: solid 5px rgba(2, 52, 91,0.7);
+}
+.btnNoBorder{
+    border: 0 !important;
 }
 

@@ -3,7 +3,7 @@
 {% block title %}Lecture de tache{% endblock %}
 
 {% block body %}
-<div class="formTypeTask2">
+<div class="form_register">
 <div class="card">
   <div class="card-header">{{task.titre|upper}} créer le : {{task.createdAt|date('d/m/y')}} par : {{task.author|upper}} section : {{task.section|upper}}</div>
   <div class="card-body">{{task.content}}</div>

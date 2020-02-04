@@ -3,41 +3,41 @@
 {% block title %}Ajouts d'une tache{% endblock %}
 
 {% block body %}
-<div class="formTypeTask">
+<div class="form_register">
 {{ form_start(form) }}
 
 <div class="form-group">
-<span class="badge badge-secondary">Titre de la tache</span>
+<span class="badge badge-secondary badgePerso">Titre de la tache</span>
 {{ form_widget(form.titre,{'attr': {'placeholder': 'Titre de la tache ...'} }) }}<br/>
 </div>
 
 <div class="form-group">
-<span class="badge badge-secondary">Date de création</span>
+<span class="badge badge-secondary badgePerso">Date de création</span>
 {{ form_widget(form.createdAt) }}<br/>
 </div>
 
 <div class="form-group">
-<span class="badge badge-secondary">Catégorie du rapport</span>
+<span class="badge badge-secondary badgePerso">Catégorie du rapport</span>
 {{ form_widget(form.taskCategorie,{'attr': {'placeholder': 'Catégorie de la tache'} }) }}<br/>
 </div>
 
 <div class="form-group">
-<span class="badge badge-secondary">Section concernée</span>
+<span class="badge badge-secondary badgePerso">Section concernée</span>
 {{ form_widget(form.section) }}<br/>
 </div>
 
 <div class="form-group">
-<span class="badge badge-secondary">URL du document (google ou autre)</span>
+<span class="badge badge-secondary badgePerso">URL du document (google ou autre)</span>
 {{ form_widget(form.urlDoc) }}<br/>
 </div>
 
 <div class="form-group">
-<span class="badge badge-secondary">Nom de l'auteur</span>
+<span class="badge badge-secondary badgePerso">Nom de l'auteur</span>
 {{ form_widget(form.author,{'attr': {'placeholder': 'Nom de l\'auteur'} }) }}<br/>
 </div>
 
 <div class="form-group">
-<span class="badge badge-secondary">Demande complète de la tache</span>
+<span class="badge badge-secondary badgePerso">Demande complète de la tache</span>
 {{ form_widget(form.content) }}<br/>
 </div>
 

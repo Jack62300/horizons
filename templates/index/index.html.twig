@@ -3,6 +3,7 @@
 {% block title %}Tableau des taches{% endblock %}
 
 {% block body %}
+<h3>Tache de Horizon'S</h3>
 <div class="formTypeTask2">
 {% for message in app.flashes('success') %}
             <div class="alert alert-success">
@@ -78,24 +79,14 @@
   </table>
  <div class="grid-container">
     <div class="dropdown">
-        <button type="button" class="btn btn-primary dropdown-toggle btnPerso" data-toggle="dropdown">
-            Voir par Type
+        <button type="button" class="btn btn-primary dropdown-toggle btnPerso btnNoBorder" data-toggle="dropdown">
+            <i class="fas fa-sort"></i> Voir par Type
         </button>
         <div class="dropdown-menu">
-            <div class="dropdown-header">Section jeux</div>
-            <a class="dropdown-item" href="{{path('overwatch_task')}}">Section overwatch</a>
-            <a class="dropdown-item" href="{{path('apex_task')}}">Section Apex</a>
-            <a class="dropdown-item" href="{{path('lol_task')}}">Section League of Legend</a>
-            <a class="dropdown-item" href="{{path('dofus_task')}}">Section Dofus</a>
-            <a class="dropdown-item" href="{{path('wow_task')}}">Section World of Warcraft</a>
-            <a class="dropdown-item" href="{{path('r6_task')}}">Section Rainbow Six</a>
-            <div class="dropdown-divider"></div>
-            <div class="dropdown-header">Section Administrative</div>
-            <a class="dropdown-item" href="{{path('communication_task')}}">Pôle Communication</a>
-            <a class="dropdown-item" href="{{path('communautaire_task')}}">Pôle Communautaire</a>
-            <a class="dropdown-item" href="{{path('admin_task')}}">Pôle Administrative</a>
-            <a class="dropdown-item" href="{{path('tech_task')}}">Pôle Technique</a>
-            <a class="dropdown-item" href="{{path('dev_task')}}">Pôle Développement</a>
+            <div class="dropdown-header">Section Disponible</div>
+            {% for section in sections %}
+            <a class="dropdown-item" href="{{ path('section_task', {'id': section.id}) }}">Section {{ section.name }}</a>
+            {% endfor %}
         </div>
     </div>
 
@@ -110,7 +101,7 @@
   </div>
   
 </div>
-  <ul class="nav card" style="width: 10%; padding: 10px; font-size: 12px; color: #333;">
+  <ul class="nav card legend" style="width: 10%; padding: 10px; font-size: 12px; color: #333;">
   <h5>Légende</h5> 
   <li><i class="fas fa-edit"> </i> Editer le contenue</li>
   <li><i class="fas fa-trash-alt"></i>  Supprimer le contenue</li>
