@@ -295,7 +295,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/task/edit/{id}", name="taskEdit")
+     * @Route("/taskedit/{id}", name="taskEdit")
      */
     public function editTask(Request $request, ManagerRegistry $manager, TaskRepository $repoTask, $id)
     {   
@@ -315,7 +315,7 @@ class IndexController extends AbstractController
             $this->addFlash('success', 'Tache mise à jour avec succées !!!');
             return $this->redirectToRoute('index');
         }
-        return $this->render('index/AddTask.html.twig', [
+        return $this->render('index/addTask.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -355,7 +355,7 @@ class IndexController extends AbstractController
             $this->addFlash('success', 'Tache Ajouter avec succées !!!');
             return $this->redirectToRoute('index');
         }
-        return $this->render('index/AddTask.html.twig', [
+        return $this->render('index/addTask.html.twig', [
             'form' => $form->createView()
         ]);
     }
